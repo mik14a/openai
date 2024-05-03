@@ -13,7 +13,12 @@ public enum ProviderType
     /// <summary>
     ///     Azure Provider
     /// </summary>
-    Azure = 2
+    Azure = 2,
+
+    /// <summary>
+    ///     LM Studio
+    /// </summary>
+    LMStudio = 3,
 }
 
 public class OpenAiOptions
@@ -22,6 +27,9 @@ public class OpenAiOptions
     private const string OpenAiDefaultBaseDomain = "https://api.openai.com/";
     private const string AzureOpenAiDefaultApiVersion = "2023-12-01-preview";
     private const string OpenAiDefaultAssistantsApiVersion = "v2";
+
+    private const string LMStudioDefaultApiVersion = "v1";
+    private const string LMStudioDefaultBaseDomain = "http://localhost:1234/";
 
     /// <summary>
     ///     Setting key for Json Setting Bindings
@@ -72,6 +80,7 @@ public class OpenAiOptions
             {
                 ProviderType.OpenAi => OpenAiDefaultApiVersion,
                 ProviderType.Azure => AzureOpenAiDefaultApiVersion,
+                ProviderType.LMStudio => LMStudioDefaultApiVersion,
                 _ => throw new ArgumentOutOfRangeException(nameof(ProviderType))
             };
         }
@@ -92,6 +101,7 @@ public class OpenAiOptions
             {
                 ProviderType.OpenAi => OpenAiDefaultBaseDomain,
                 ProviderType.Azure => ResourceName == null ? null : $"https://{ResourceName}.openai.azure.com/",
+                ProviderType.LMStudio => ResourceName == null ? null : $"http://{ResourceName}/",
                 _ => throw new ArgumentOutOfRangeException(nameof(ProviderType))
             };
 #pragma warning restore CS8603
